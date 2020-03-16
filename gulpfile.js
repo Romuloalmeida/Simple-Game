@@ -1,85 +1,89 @@
-// Initialize modules
-// Importing specific gulp API functions lets us write them below as series() instead of gulp.series()
-const { src, dest, watch, series, parallel } = require('gulp');
-var gulp        = require('gulp');
-// Importing all the Gulp-related packages we want to use
-const sourcemaps = require('gulp-sourcemaps');
+const gulp = require("gulp");
 const sass = require('gulp-sass');
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
+const sourcemaps = require('gulp-sourcemaps');
 var replace = require('gulp-replace');
+
+const browserify = require("browserify");
+const babelify = require("babelify");
+const source = require("vinyl-source-stream");
+const buffer = require("vinyl-buffer");
+const uglify = require("gulp-uglify");
+const postcss = require("gulp-postcss");
+const cssnano = require("cssnano");
+const del = require("del");
+const htmlmin = require("gulp-htmlmin");
 var browserSync = require('browser-sync').create();
 
-// File paths
-const files = { 
-    scssPath: 'app/scss/**/*.scss',
-    jsPath: 'app/js/**/*.js'
+const paths = {
+    source: "./src",
+    build: "./build"
+};
+ 
+
+function javascriptBuild() {
+    return (
+        browserify({
+            entries: [`${paths.source}/scripts/main.js`],
+            transform: [babelify.configure({ presets: ["@babel/preset-env"] })]
+        })
+            .bundle()
+            .pipe(source("bundle.js"))
+            // Turn it into a buffer!
+            .pipe(buffer())
+            // And uglify
+            //.pipe(uglify())
+            .pipe(gulp.dest(`${paths.build}/scripts`))
+    );
 }
 
-// Sass task: compiles the style.scss file into style.css
-function scssTask(){    
-    return src(files.scssPath)
+function htmlBuild() {
+    return gulp
+        .src(`${paths.source}/*.html`)
+        .pipe(htmlmin({ collapseWhitespace: true,removeComments:true,preserveLineBreaks:true }))
+        .pipe(gulp.dest(paths.build));
+}
+
+function scssBuild() {
+    return gulp
+        .src(`${paths.source}/styles/**/*.scss`)
         .pipe(sourcemaps.init()) // initialize sourcemaps first
         .pipe(sass()) // compile SCSS to CSS
-        .pipe(postcss([ autoprefixer(), cssnano() ])) // PostCSS plugins
+        .pipe(postcss([cssnano()]))
         .pipe(sourcemaps.write('.')) // write sourcemaps file in current directory
-        .pipe(dest('dist')
-    ); // put final CSS in dist folder
+        .pipe(gulp.dest(`${paths.build}/styles`));
 }
 
-// JS task: concatenates and uglifies JS files to script.js
-function jsTask(){
-    return src([
-        files.jsPath
-        //,'!' + 'includes/js/jquery.min.js', // to exclude any specific files
-        ])
-        .pipe(concat('all.js'))
-        .pipe(uglify())
-        .pipe(dest('dist')
-    );
+function watchTask(){
+    return gulp.watch([paths.source + '/scripts/**/*.js', paths.source + '/styles/**/*.css'],
+        {interval: 1000, usePolling: true}, //Makes docker work
+        gulp.series(
+            gulp.parallel(scssBuild, javascriptBuild),
+            cacheBustTask,
+            htmlBuild
+        )
+    );    
+}
+
+function cleanup() {
+    // Simply execute del with the build folder path
+    return del([paths.build]);
+}
+ 
+function browser(){
+    browserSync.init({
+        server: {
+           baseDir: ".",
+           index: "/src/index.html"
+        }
+    });
 }
 
 // Cachebust
 function cacheBustTask(){
     var cbString = new Date().getTime();
-    return src(['index.html'])
+    return gulp.src([paths.build+'/index.html'])
         .pipe(replace(/cb=\d+/g, 'cb=' + cbString))
-        .pipe(dest('.'));
+        .pipe(gulp.dest(paths.build));
 }
 
-// Watch task: watch SCSS and JS files for changes
-// If any change, run scss and js tasks simultaneously
-
-function browser(){
-    browserSync.init({
-        server: {
-           baseDir: ".",
-           index: "/index.html"
-        }
-    });
-}
-
-function watchTask(){
-
-    return watch([files.scssPath, files.jsPath],
-        {interval: 1000, usePolling: true}, //Makes docker work
-        series(
-            parallel(scssTask, jsTask),
-            cacheBustTask
-        )
-    );    
-}
-
-
-
-// Export the default Gulp task so it can be run
-// Runs the scss and js tasks simultaneously
-// then runs cacheBust, then watch task
-exports.default = series(
-    parallel(scssTask, jsTask), 
-    cacheBustTask,
-    parallel(browser,watchTask)
-);
+exports.default = gulp.series(cleanup,htmlBuild,javascriptBuild,scssBuild, gulp.parallel(watchTask,browser));
