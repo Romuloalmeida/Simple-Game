@@ -19,8 +19,8 @@ let TextureCache = utils.TextureCache
 
 
 // const resources = [{
-//     name: 'catImage',
-//     url: 'images/cat.png'
+//     name: 'explorerImage',
+//     url: 'images/explorer.png'
 //   }];
 const resources = "images/treasureHunter.json";
 
@@ -77,6 +77,7 @@ function setup() {
         xOffset = 150;
 
     //Make as many blobs as there are `numberOfBlobs`
+
     for (let i = 0; i < numberOfBlobs; i++) {
 
         //Make a blob
@@ -105,6 +106,52 @@ function setup() {
     //Start the game loop 
     app.ticker.add(delta => gameLoop(delta));
 
+
+    let keyboard = require("./utils/keyboard").default;
+
+    let left = keyboard("ArrowLeft"),
+      up = keyboard("ArrowUp"),
+      right = keyboard("ArrowRight"),
+      down = keyboard("ArrowDown");
+
+    //Left arrow key `press` method
+    left.press = () => {
+        //Change the explorer's velocity when the key is pressed
+        explorer.vx = -5;
+    };
+    
+    //Left arrow key `release` method
+    left.release = () => {
+        //If the left arrow has been released, and the right arrow isn't down,
+        //and the explorer isn't moving vertically:
+        //Stop the explorer
+        explorer.vx = 0;
+    };
+
+    //Up
+    up.press = () => {
+        explorer.vy = -5;
+    };
+    up.release = () => {
+        explorer.vy = 0;
+    };
+
+    //Right
+    right.press = () => {
+        explorer.vx = 5;
+    };
+    right.release = () => {
+        explorer.vx = 0;
+    };
+
+    //Down
+    down.press = () => {
+        explorer.vy = 5;
+    };
+    down.release = () => {
+        explorer.vy = 0;
+    };
+
 }
 
 function gameLoop(delta){
@@ -115,8 +162,8 @@ function gameLoop(delta){
 
 // All here is 60fps
 function play(delta) {
-    explorer.vx = 1;
     explorer.x += explorer.vx;
+    explorer.y += explorer.vy;
 }
 
 function randomInt(min, max) {
