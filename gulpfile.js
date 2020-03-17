@@ -64,6 +64,10 @@ function watchTask(){
     );    
 }
 
+function copyImages(){
+    return gulp.src([`${paths.source}/images/**`]).pipe(gulp.dest(`${paths.build}/images`) );
+}
+
 function cleanup() {
     // Simply execute del with the build folder path
     return del([paths.build]);
@@ -72,8 +76,8 @@ function cleanup() {
 function browser(){
     browserSync.init({
         server: {
-           baseDir: ".",
-           index: "/src/index.html"
+           baseDir: "./build",
+           index: "index.html"
         }
     });
 }
@@ -86,4 +90,6 @@ function cacheBustTask(){
         .pipe(gulp.dest(paths.build));
 }
 
-exports.default = gulp.series(cleanup,htmlBuild,javascriptBuild,scssBuild, gulp.parallel(watchTask,browser));
+
+
+exports.default = gulp.series(cleanup,copyImages,htmlBuild,javascriptBuild,scssBuild, gulp.parallel(watchTask,browser));
