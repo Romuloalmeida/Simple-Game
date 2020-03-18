@@ -1,0 +1,111 @@
+{"frames": {
+
+"adventuress-0.png":
+{
+	"frame": {"x":1,"y":1,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-1.png":
+{
+	"frame": {"x":1,"y":35,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-2.png":
+{
+	"frame": {"x":1,"y":137,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-3.png":
+{
+	"frame": {"x":1,"y":341,"w":24,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":24,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-4.png":
+{
+	"frame": {"x":1,"y":171,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-5.png":
+{
+	"frame": {"x":1,"y":205,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-6.png":
+{
+	"frame": {"x":1,"y":375,"w":24,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":24,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-7.png":
+{
+	"frame": {"x":1,"y":239,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-8.png":
+{
+	"frame": {"x":1,"y":273,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-9.png":
+{
+	"frame": {"x":1,"y":307,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-10.png":
+{
+	"frame": {"x":1,"y":69,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+"adventuress-11.png":
+{
+	"frame": {"x":1,"y":103,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+}},
+"animations": {
+	"adventuress": ["adventuress-0.png","adventuress-1.png","adventuress-2.png","adventuress-3.png","adventuress-4.png","adventuress-5.png","adventuress-6.png","adventuress-7.png","adventuress-8.png","adventuress-9.png","adventuress-10.png","adventuress-11.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "adventuress.png",
+	"format": "RGBA8888",
+	"size": {"w":28,"h":408},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b3dd63e961a2550b35591bac90cbcd86:8b32ca82637b47c3077c42239cf5b119:9c61a0477652a86244f59e7af32b8e65$"
+}
+}
