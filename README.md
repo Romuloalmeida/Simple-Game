@@ -1,3 +1,7 @@
-** Simple Game **
+# Simple Game
 
-It was built using PIXI.js
+It's a very simple game built using PIXI.JS.
+
+### Demo
+
+[Click here to play!](https://romuloalmeida.github.io/Simple-Game/build)
