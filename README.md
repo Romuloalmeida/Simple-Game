@@ -1,3 +1,3 @@
-TODO
+** Simple Game **
 
-Do and test the SCSS at gulp
+It was built using PIXI.js
